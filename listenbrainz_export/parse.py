@@ -1,10 +1,19 @@
 import json
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Optional, NamedTuple, Any, Dict, List, Iterator, Union
 
 DATE_REGEX = "%a, %d %b %Y %H:%M:%S %Z"
 
 Json = Dict[str, Any]
+
+PathIsh = Union[str, Path]
+
+
+def handle_path(path: PathIsh) -> Path:
+    if isinstance(path, str):
+        path = Path(path)
+    return path
 
 
 def _parse_date(s: Union[str, int, None]) -> Optional[datetime]:
@@ -65,8 +74,8 @@ class Listen(NamedTuple):
         )
 
 
-def iter_listens(from_file: str) -> Iterator[Listen]:
-    with open(from_file, "r") as f:
+def iter_listens(from_file: PathIsh) -> Iterator[Listen]:
+    with handle_path(from_file).open() as f:
         data: List[Dict[str, Any]] = json.load(f)
     for blob in data:
         yield Listen.from_blob(blob)
