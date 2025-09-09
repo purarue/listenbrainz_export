@@ -1,11 +1,12 @@
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional, NamedTuple, Any, Dict, List, Iterator, Union
+from typing import Optional, NamedTuple, Any, Union
+from collections.abc import Iterator
 
 DATE_REGEX = "%a, %d %b %Y %H:%M:%S %Z"
 
-Json = Dict[str, Any]
+Json = dict[str, Any]
 
 PathIsh = Union[str, Path]
 
@@ -39,7 +40,7 @@ class Listen(NamedTuple):
     username: Optional[str]
 
     @classmethod
-    def from_blob(cls, blob: Dict[str, Any]) -> "Listen":
+    def from_blob(cls, blob: dict[str, Any]) -> "Listen":
         # this works by using 'pop's on the dictionary to slowly
         # decompose them without running into possible errors,
         # and taking any remaining data left over in the typical
@@ -76,6 +77,6 @@ class Listen(NamedTuple):
 
 def iter_listens(from_file: PathIsh) -> Iterator[Listen]:
     with handle_path(from_file).open() as f:
-        data: List[Dict[str, Any]] = json.load(f)
+        data: list[dict[str, Any]] = json.load(f)
     for blob in data:
         yield Listen.from_blob(blob)

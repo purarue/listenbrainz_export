@@ -1,5 +1,5 @@
 import logging
-from typing import Optional, List, Dict, Any
+from typing import Optional, Any
 from datetime import datetime, timedelta
 
 import requests
@@ -22,7 +22,7 @@ def request_playing_now(
     username: str,
     *,
     logger: Optional[logging.Logger] = None,
-) -> List[Json]:
+) -> list[Json]:
     """
     request the currently playing song, if any
     """
@@ -31,7 +31,7 @@ def request_playing_now(
         logger.debug(f"Requesting {r.url}")
     r.raise_for_status()
     data = r.json()
-    listens: List[Any] = data["payload"]["listens"]
+    listens: list[Any] = data["payload"]["listens"]
     return listens
 
 
@@ -46,14 +46,14 @@ def request_chunk(
     count: int = 100,
     max_ts: Optional[int] = None,
     logger: Optional[logging.Logger] = None,
-) -> List[Json]:
+) -> list[Json]:
     """
     paginate through listens for a user, by specifying an epoch time
     to receive scrobbles before
     once we receive the first chunk of scrobbles, use the epoch time of the
     last currently known scrobbles, and filter anything that was posted before that
     """
-    params: Dict[str, Any] = {}
+    params: dict[str, Any] = {}
     if max_ts is not None:
         params["max_ts"] = max_ts
     params["count"] = count
@@ -62,7 +62,7 @@ def request_chunk(
         logger.debug(f"Requesting {r.url}")
     r.raise_for_status()
     data = r.json()
-    listens: List[Json] = data["payload"]["listens"]
+    listens: list[Json] = data["payload"]["listens"]
     return listens
 
 
@@ -73,7 +73,7 @@ def request_listens(
     days: Optional[int] = None,
 ) -> Json:
     max_ts: Optional[int] = None
-    all_listens: List[Json] = []
+    all_listens: list[Json] = []
     curpage = 0
     while True:
         new_listens = request_chunk(username, max_ts=max_ts, logger=logger)
