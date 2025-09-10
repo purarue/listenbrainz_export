@@ -10,7 +10,7 @@ Requires `python3.10+`
 
 To install with pip, run:
 
-    pip install git+https://github.com/purarue/listenbrainz_export
+    pip install listenbrainz_export
 
 ## Usage
 
