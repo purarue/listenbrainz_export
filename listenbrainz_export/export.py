@@ -1,5 +1,5 @@
 import logging
-from typing import Optional, Any
+from typing import Any
 from datetime import datetime, timedelta
 
 import requests

@@ -1,7 +1,7 @@
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional, NamedTuple, Any, Union
+from typing import NamedTuple, Any, Union
 from collections.abc import Iterator
 
 DATE_REGEX = "%a, %d %b %Y %H:%M:%S %Z"
