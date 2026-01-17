@@ -17,7 +17,7 @@ def handle_path(path: PathIsh) -> Path:
     return path
 
 
-def _parse_date(s: Union[str, int, None]) -> Optional[datetime]:
+def _parse_date(s: str | int | None) -> datetime | None:
     if s is None:
         return None
     if isinstance(s, int):
@@ -32,12 +32,12 @@ class Listen(NamedTuple):
     track_name: str
     artist_name: str
     # could be null if you're currently listening to something
-    listened_at: Optional[datetime]
-    inserted_at: Optional[datetime]
-    recording_id: Optional[str]
-    release_name: Optional[str]
+    listened_at: datetime | None
+    inserted_at: datetime | None
+    recording_id: str | None
+    release_name: str | None
     metadata: Json
-    username: Optional[str]
+    username: str | None
 
     @classmethod
     def from_blob(cls, blob: dict[str, Any]) -> "Listen":
@@ -50,10 +50,10 @@ class Listen(NamedTuple):
         # just extracts the most useful stuff and attaches the
         # rest onto metadata
         track_metadata = blob.pop("track_metadata", {})
-        listened_at: Optional[int] = blob.pop("listened_at", None)
-        inserted_at: Optional[str] = blob.pop("inserted_at", None)
-        recording_id: Optional[str] = blob.pop("recording_msid", None)
-        username: Optional[str] = blob.pop("user_name", None)
+        listened_at: int | None = blob.pop("listened_at", None)
+        inserted_at: str | None = blob.pop("inserted_at", None)
+        recording_id: str | None = blob.pop("recording_msid", None)
+        username: str | None = blob.pop("user_name", None)
         release_name = track_metadata.pop("release_name", None)
         artist_name: str = track_metadata.pop("artist_name", "<unknown>")
         track_name: str = track_metadata.pop("track_name", "<unknown>")

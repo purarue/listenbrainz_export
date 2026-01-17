@@ -21,7 +21,7 @@ Json = Any
 def request_playing_now(
     username: str,
     *,
-    logger: Optional[logging.Logger] = None,
+    logger: logging.Logger | None = None,
 ) -> list[Json]:
     """
     request the currently playing song, if any
@@ -44,8 +44,8 @@ def request_chunk(
     username: str,
     *,
     count: int = 100,
-    max_ts: Optional[int] = None,
-    logger: Optional[logging.Logger] = None,
+    max_ts: int | None = None,
+    logger: logging.Logger | None = None,
 ) -> list[Json]:
     """
     paginate through listens for a user, by specifying an epoch time
@@ -69,10 +69,10 @@ def request_chunk(
 def request_listens(
     username: str,
     logger: logging.Logger = logzero.logger,
-    pages: Optional[int] = None,
-    days: Optional[int] = None,
+    pages: int | None = None,
+    days: int | None = None,
 ) -> Json:
-    max_ts: Optional[int] = None
+    max_ts: int | None = None
     all_listens: list[Json] = []
     curpage = 0
     while True:

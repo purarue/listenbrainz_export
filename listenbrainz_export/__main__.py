@@ -38,7 +38,7 @@ def playing_now(listenbrainz_username: str) -> None:
 )
 @click.argument("LISTENBRAINZ_USERNAME")
 def export(
-    pages: Optional[int], days: Optional[int], listenbrainz_username: str
+    pages: int | None, days: int | None, listenbrainz_username: str
 ) -> None:
     """
     Downloads all scrobbles for your listenbrainz account
