@@ -36,9 +36,7 @@ def playing_now(listenbrainz_username: str) -> None:
     help="Request listens no older than this many days",
 )
 @click.argument("LISTENBRAINZ_USERNAME")
-def export(
-    pages: int | None, days: int | None, listenbrainz_username: str
-) -> None:
+def export(pages: int | None, days: int | None, listenbrainz_username: str) -> None:
     """
     Downloads all scrobbles for your listenbrainz account
     """
